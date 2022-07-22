@@ -1,0 +1,266 @@
+<div class="container-fluid">
+  <!-- Cards view -->
+  <div class="container text-center">
+    <div class="row justify-content-evenly">
+      <div
+        class="card col-3"
+        style="width: 18rem"
+        *ngFor="let legoSet of legoSetList"
+      >
+        <div *ngIf="legoSet.img" class="card-header text-center">
+          <img
+            src="{{ legoSet.img }}"
+            class="card-img-top"
+            alt="{{ legoSet.name }}"
+          />
+        </div>
+        <div *ngIf="!legoSet.img" class="card-header text-center">
+          <img
+            src="../../../assets/yellowBrick.png"
+            class="card-img-top"
+            alt="no image available"
+          />
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title">{{ legoSet.name }}</h5>
+          <p class="card-text">{{ legoSet.year }}</p>
+          <p class="card-text">{{ legoSet.num_parts }} parts</p>
+        </div>
+
+        <div class="card-footer">
+          <button
+            type="button"
+            class="btn btn-success"
+            data-bs-toggle="modal"
+            data-bs-target="#editSetModal"
+            (click)="editSet(legoSet)"
+          >
+            <fa-icon [icon]="iconEdit"></fa-icon> Edit
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-success"
+            (click)="deleteSet(legoSet)"
+          >
+            <fa-icon [icon]="iconDelete"></fa-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add set modal -->
+  <div
+    class="modal fade"
+    id="addSetModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add new Set</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="setDetail">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Name </label>
+              <input
+                type="text"
+                formControlName="name"
+                class="form-control"
+                id="name"
+                aria-describedby="emailHelp"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Year </label>
+              <input
+                type="number"
+                min="1990"
+                max="2099"
+                step="1"
+                formControlName="year"
+                class="form-control"
+                id="year"
+                aria-describedby="emailHelp"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label"
+                >Number of Parts
+              </label>
+              <input
+                type="number"
+                min="0"
+                formControlName="num_parts"
+                class="form-control"
+                id="num_parts"
+                aria-describedby="emailHelp"
+              />
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+                (click)="addSet()"
+              >
+                Add Set
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit set modal -->
+  <div
+    class="modal fade"
+    id="editSetModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Set</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="setDetail">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Name </label>
+              <input
+                type="text"
+                formControlName="name"
+                class="form-control"
+                id="name"
+                aria-describedby="emailHelp"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Year </label>
+              <input
+                type="number"
+                min="1990"
+                max="2099"
+                step="1"
+                formControlName="year"
+                class="form-control"
+                id="year"
+                aria-describedby="emailHelp"
+              />
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label"
+                >Number of Parts
+              </label>
+              <input
+                type="number"
+                min="0"
+                formControlName="num_parts"
+                class="form-control"
+                id="num_parts"
+                aria-describedby="emailHelp"
+              />
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+                (click)="updateSet()"
+              >
+                Update Set
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search set modal -->
+  <!-- <div
+    class="modal fade"
+    id="searchSetModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Search Set</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="setDetail">
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Name </label>
+              <input
+                type="text"
+                formControlName="name"
+                class="form-control"
+                id="name"
+                aria-describedby="emailHelp"
+              />
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+                (click)="searchSet()"
+              >
+                Search Set
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div> -->
+</div>

@@ -1,0 +1,21 @@
+.col {
+  margin: 1%;
+}
+
+.card-footer,
+.card-header {
+  background: transparent;
+}
+
+button {
+  margin-left: 2%;
+}
+
+.card {
+  margin-top: 2%;
+}
+
+#noImg {
+  height: 50%;
+  width: 50%;
+}
